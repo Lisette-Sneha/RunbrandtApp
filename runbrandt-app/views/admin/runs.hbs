@@ -1,0 +1,21 @@
+<h1>Hi Runbrandt!</h1>
+<p>On this page you kan upload fresh runs. You can also view, edit and delete previous runs</p>
+<form action='/admin/runs' method='post' enctype="multipart/form-data">
+    <input type='text' name='name' placeholder='name'>
+    <input type='text' name='kilometers' placeholder='kilometers'>
+    <input type='text' name='location' placeholder='location'> 
+    <input type='file' name='image'>
+    <button type='submit'>Had a good run? Submit the details!</button>
+</form>
+
+<p>All Art Pieces by Runbrandt</p>
+{{#each runDocs}}
+<p>{{name}},{{kilometers}},{{location}}</p>
+<img src={{imageUrl}}>
+{{/each}}
+
+
+
+
+
+

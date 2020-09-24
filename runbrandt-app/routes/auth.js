@@ -5,7 +5,7 @@ const User = require('../models/user')
 const bcrypt = require('bcrypt')
 
 router.get('/signup', (req, res, next) => {
-    res.render('signup')
+    res.render('admin/signup')
 })
 
 router.post('/signup', (req, res, next) => {
@@ -27,7 +27,7 @@ router.post('/signup', (req, res, next) => {
 })
 
 router.get('/login', (req, res, next) => {
-    res.render('login')
+    res.render('admin/login')
 })
 
 router.post('/login', (req, res, next) => {
@@ -44,7 +44,7 @@ router.post('/login', (req, res, next) => {
     })
     .then(hashMatched => {
         if(!hashMatched) {
-            res.render('login', {
+            res.render('admin/login', {
                 errorMessage:'Oops, password incorrect'
             })
         }

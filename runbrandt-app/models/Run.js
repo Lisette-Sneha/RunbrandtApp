@@ -5,7 +5,8 @@ const Schema = mongoose.Schema
 const runSchema = new Schema ({
     name: String,
     kilometers: String,
-    location: String
+    location: String,
+    imageUrl: String
 })
 
 const Run = mongoose.model('Run', runSchema)
