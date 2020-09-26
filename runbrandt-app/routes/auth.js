@@ -49,7 +49,8 @@ router.post('/login', (req, res, next) => {
             })
         }
         else{req.session.user = currentUser
-            res.send('password correct')}
+            res.redirect('/admin/runs')
+        }
         
     })
     .catch(err => {

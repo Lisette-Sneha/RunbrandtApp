@@ -1,0 +1,13 @@
+<h1>Details of {{name}}</h1>
+<p>The location of this run is {{location}}.</p>
+<p>The run was {{kilometers}} kilometers</p>
+<p>Click the image for a downloadable map for your phone or wearable</p>
+<img src={{imageUrl}}>
+<p>Is something missing or incorrect? Edit your run here:</p>
+<form action="/edit/{{_id}}" method='post'>
+    <input type="text" name='kilometers' value="{{kilometers}}">
+    <input type="text" name='name' value='{{name}}'> 
+    <input type="text" name='location' value='{{location}}'> 
+    <button type="submit">Edit this run</button>
+</form>
+<a href="/delete/{{_id}}">Delete this run</a>
