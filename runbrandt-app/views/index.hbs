@@ -6,3 +6,25 @@
 <input type="input" id="name" name="name" placeholder="Shape or name of run">
 <input type="input" id="location" name="location" placeholder="location by city">
 <button type="submit">Find my next run</button>
+
+<h2>Custom work and guided runs with Runbrandt</h2>
+<form action="/send-email" method="POST">
+    <fieldset>
+<label for="run-with-runbrandt">Select your request:</label>
+<select id="run-options" name="run-options">
+  <option value="guided">Book a personal guided run with Runbrandt.</option>
+  <option value="custom">Enquire about a custom run shape</option>
+  <option value="standard">Buy an existing piece of GPS ART to run yourself</option>
+</select>
+<legend>Your request and details:</legend>
+<label for="clientname">Name:</label>
+<input type="text" id="clientname" name="clientname" placeholder="your name"><br>
+<label for="clientemail">Email:</label>
+<input type="email" id="clientemail" name="clientemail" placeholder="your email"><br>
+<label for="clientphone">Phonenumber:</label>
+<input type="text" id="clientphone" name="clientphone" placeholder="your phonenumber"><br>
+<textarea name="message" placeholder="Any extra information you believe is relevant" style="width:200px; height:300px; ">
+</textarea>
+<input type="submit" value="Submit">
+</fieldset>
+</form>

@@ -2,7 +2,17 @@ const express = require('express');
 const router = express.Router();
 const Run = require('../models/Run')
 const fileUploader = require('../configs/cloudinary')
+const nodemailer = require('nodemailer')
+console.log(process.env.USER)
+console.log(process.env.PASS)
 
+const transporter = nodemailer.createTransport({
+  service: 'Gmail',
+  auth: {
+    user: process.env.GMAILUSER,
+    pass: process.env.GMAILPASS
+  }
+})
 
 /* GET home page. */
 router.get('/', (req, res, next) => {
@@ -76,5 +86,20 @@ router.get('/delete/:id', (req, res, next) => {
       next(err)
     })
 })
+
+router.post('/send-email', (req, res, next) => {
+  const { clientname, clientemail, clientphone, message } = req.body;
+  console.log(req.body)
+  res.render('message', { clientname, clientemail, clientphone, message })
+  transporter.sendMail({
+    from: '"My Awesome Project " <myawesome@project.com>',
+    to: process.env.GMAILUSER,
+    subject: `new request from ${clientname}`,
+    text: 'texting',
+    html: `<b>${message} ${clientname} ${clientemail} ${clientphone}</b>`
+  })
+    .then(info => res.render('message', { clientname, clientemail, clientphone, message }))
+    .catch(error => console.log(error));
+});
 
 module.exports = router;
