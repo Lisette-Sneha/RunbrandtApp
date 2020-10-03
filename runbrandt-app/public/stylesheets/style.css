@@ -1,6 +1,9 @@
 body {
     background-color:#98c1d9;
 }
+.my-nav-bar a {
+  color: #293241
+}
 
 h1 {
   color: #293241;
@@ -14,3 +17,11 @@ img {
   width: 50%;
   height: 50%;
 }
+
+button {
+  color: #EE6C4D;
+  background-color: #293241;
+}
+
+.services-section {
+  background-color: #3D5A80
