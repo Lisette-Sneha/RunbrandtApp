@@ -9,7 +9,7 @@ router.get('/signup', (req, res, next) => {
 })
 
 router.post('/signup', (req, res, next) => {
-    const {username, password} = req.body
+    const { username, password } = req.body
 
     bcrypt.hash(password, 10)
         .then(hashedPassword => {
@@ -18,8 +18,8 @@ router.post('/signup', (req, res, next) => {
                 password: hashedPassword
             })
         })
-        .then ( () => {
-            res.send('user created')
+        .then(() => {
+            res.send('user created - Go to the homepage to login')
         })
         .catch(e => {
             next(e)
@@ -35,26 +35,33 @@ router.post('/login', (req, res, next) => {
 
     let currentUser
 
-    User.findOne({username})
-    .then(user => {
-        if(user) {
-            currentUser = user
-            return bcrypt.compare(password, user.password)
-        }
-    })
-    .then(hashMatched => {
-        if(!hashMatched) {
-            res.render('admin/login', {
-                errorMessage:'Oops, password incorrect'
-            })
-        }
-        else{req.session.user = currentUser
-            res.redirect('/admin/runs')
-        }
-        
-    })
-    .catch(err => {
-        next(err)
+    User.findOne({ username })
+        .then(user => {
+            if (user) {
+                currentUser = user
+                return bcrypt.compare(password, user.password)
+            }
+        })
+        .then(hashMatched => {
+            if (!hashMatched) {
+                res.render('admin/login', {
+                    errorMessage: 'Oops, password incorrect'
+                })
+            }
+            else {
+                req.session.user = currentUser
+                res.redirect('/admin/runs')
+            }
+
+        })
+        .catch(err => {
+            next(err)
+        })
+})
+
+router.get('/logout', (req, res) => {
+    req.session.destroy(err => {
+        res.redirect('/')
     })
 })
 

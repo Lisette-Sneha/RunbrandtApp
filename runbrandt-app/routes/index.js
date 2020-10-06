@@ -25,13 +25,10 @@ router.get('/', async (req, res, next) => {
     const instaPost = await Instarun.find()
     if (!instaPost[0]) {
       postId = 'CCRRRmPH-Is'
-      console.log('document does not exist')
     }
     else {
       postId = instaPost[0].postId
-      console.log('document exists indeed')
     }
-    console.log('homepage')
     const responseFromApi = await axios.get(`https://graph.facebook.com/v8.0/instagram_oembed?url=https://www.instagram.com/p/${postId}/&access_token=1748054368676135|OsSRw10IqMrFNC7KD55g6Zr3W5Y`)
     res.render('index', { instaFeed: responseFromApi.data.html })
   }
@@ -42,10 +39,17 @@ router.get('/', async (req, res, next) => {
 
 
 router.get('/admin/runs', (req, res, next) => {
+  if (req.session.currentUser){
+    res.render('admin/runs');
+  }
+  else {
+    res.redirect('/')
+  }
   Run.find()
     .then(runDocs => {
       res.render('admin/runs', { runDocs });
     })
+
 });
 
 router.post('/admin/runs', fileUploader.single('image'), (req, res, next) => {
@@ -125,20 +129,36 @@ router.post('/send-email', (req, res, next) => {
 });
 
 router.get('/admin/instaposts', (req, res, next) => {
-  res.render('admin/instaposts');
+  if(req.session.currentUser){
+    res.render('admin/instaposts');
+  } 
+  else {
+    res.redirect('/')
+  }
 })
 
 router.post('/admin/instaposts', async (req, res, next) => {
-  const { postId } = req.body
-  console.log(postId)
+  const { postIdFromUser } = req.body
   try {
-    const document = await Instarun.findOne({ postId })
-    if (!document) {
+    const document = await Instarun.find()
+    console.log(document)
+    if (document.length == 0) {
+      console.log('document does not exist fuck')
       await Instarun.create({
-        postId
+        postId:postIdFromUser
       })
+      res.redirect('/')
     }
-    else { console.log('the document exists already') }
+    else {
+      await Instarun.remove()
+      await Instarun.create({
+        postId:postIdFromUser
+      })
+      res.redirect('/')
+      // console.log(postIdFromUser)
+      // await Instarun.findOneAndUpdate({ postId:postIdFromUser }, {postId:postIdFromUser})
+      // console.log('the document exists already') 
+    }
   }
   catch (error) {
     next(error)

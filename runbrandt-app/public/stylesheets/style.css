@@ -1,11 +1,26 @@
-body {
-    background-color:#98c1d9;
-}
+
 .my-nav-bar a {
   color: #293241
 }
+.runbrandt-logo {
+  height: 10%;
+  width: 10%;
+}
+
+#custom-work {
+  padding: 0 10px;
+}
+
+#custom-work label {
+  display: block;
+  margin-top: 20px;
+}
+textarea {
+  margin-top: 20px;
+}
 
 h1 {
+  display: block;
   color: #293241;
 }
 
@@ -25,3 +40,4 @@ button {
 
 .services-section {
   background-color: #3D5A80
+}
