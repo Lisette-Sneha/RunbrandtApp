@@ -50,6 +50,7 @@ router.post('/login', (req, res, next) => {
             }
             else {
                 req.session.user = currentUser
+                console.log(req.session.user)
                 res.redirect('/admin/runs')
             }
 

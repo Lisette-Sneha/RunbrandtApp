@@ -39,17 +39,16 @@ router.get('/', async (req, res, next) => {
 
 
 router.get('/admin/runs', (req, res, next) => {
-  if (req.session.currentUser){
-    res.render('admin/runs');
-  }
-  else {
+  console.log('checking this part')
+  console.log(req.session.currentUser)
+  if (req.session.user) {
+    Run.find()
+      .then(runDocs => {
+        res.render('admin/runs', { runDocs });
+      })
+  } else {
     res.redirect('/')
   }
-  Run.find()
-    .then(runDocs => {
-      res.render('admin/runs', { runDocs });
-    })
-
 });
 
 router.post('/admin/runs', fileUploader.single('image'), (req, res, next) => {
@@ -129,10 +128,9 @@ router.post('/send-email', (req, res, next) => {
 });
 
 router.get('/admin/instaposts', (req, res, next) => {
-  if(req.session.currentUser){
+  if (req.session.user) {
     res.render('admin/instaposts');
-  } 
-  else {
+  } else {
     res.redirect('/')
   }
 })
@@ -145,14 +143,14 @@ router.post('/admin/instaposts', async (req, res, next) => {
     if (document.length == 0) {
       console.log('document does not exist fuck')
       await Instarun.create({
-        postId:postIdFromUser
+        postId: postIdFromUser
       })
       res.redirect('/')
     }
     else {
       await Instarun.remove()
       await Instarun.create({
-        postId:postIdFromUser
+        postId: postIdFromUser
       })
       res.redirect('/')
       // console.log(postIdFromUser)
